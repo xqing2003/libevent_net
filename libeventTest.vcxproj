@@ -98,6 +98,7 @@
     <ClCompile Include="libeventTest.cpp" />
     <ClCompile Include="Net\Address.cpp" />
     <ClCompile Include="Net\CSocket.cpp" />
+    <ClCompile Include="Net\NetConnection.cpp" />
     <ClCompile Include="Net\NetManager.cpp" />
     <ClCompile Include="Net\SocketAPI.cpp" />
     <ClCompile Include="Net\SocketStream.cpp" />

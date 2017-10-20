@@ -24,6 +24,22 @@ CSocket::CSocket(SOCKET s, const struct sockaddr_in *addr) {
 	m_bNoBlocking = false;
 }
 
+CSocket::CSocket(const CSocket &rhs) {
+	*this = rhs;
+}
+
+CSocket &CSocket::operator=(const CSocket &rhs) {
+	if (this == &rhs) {
+		return *this;
+	}
+	m_nSocketID = rhs.m_nSocketID;
+	memcpy(&m_oSockAddr, &rhs.m_oSockAddr, sizeof(m_oSockAddr));
+	memcpy(m_szIP, rhs.m_szIP, IP_SIZE);
+	m_nPort = rhs.m_nPort;
+	m_bNoBlocking = rhs.m_bNoBlocking;
+	return *this;
+}
+
 CSocket::~CSocket() {
 	;
 }
@@ -84,6 +100,7 @@ SOCKET CSocket::Accept(struct sockaddr *addr, uint *addrLen) {
 	return client;
 }
 
+#if 0
 CSocket *CSocket::Accept() {
 	sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
@@ -95,6 +112,19 @@ CSocket *CSocket::Accept() {
 
 	CSocket *pSocket = new CSocket(client, &addr);
 	return pSocket;
+}
+#endif
+
+bool CSocket::Accept(CSocket &rhs) {
+	sockaddr_in addr;
+	memset(&addr, 0, sizeof(addr));
+	uint size = sizeof(addr);
+	SOCKET client = Accept((struct sockaddr *)&addr, &size);
+	if (INVALID_SOCKET == client) {
+		return false;
+	}
+	rhs = CSocket(client, &addr);
+	return true;
 }
 
 int CSocket::Send(const void *buf, int len, uint flags /* = 0 */) {

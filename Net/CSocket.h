@@ -8,8 +8,10 @@ public:
 	CSocket();
 	CSocket(const char *psczIP, uint port);
 	CSocket(SOCKET s, const struct sockaddr_in *addr);
-
+	CSocket(const CSocket &rhs);
 	virtual ~CSocket();
+
+	CSocket &operator=(const CSocket &rhs);
 public:
 	bool Create();
 	void Close();
@@ -18,7 +20,8 @@ public:
 	bool Bind(uint port);
 	bool Listen(int backlog);
 	SOCKET Accept(struct sockaddr *addr, uint *addrLen);
-	CSocket *Accept();
+// 	CSocket *Accept();
+	bool Accept(CSocket &rhs);
 
 	int  Send(const void *buf, int len, uint flags = 0);
 	int  Recv(void* buf, uint len, uint flags = 0);

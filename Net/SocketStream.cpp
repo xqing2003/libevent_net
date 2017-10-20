@@ -196,18 +196,21 @@ int SocketStream::Fill( )
 
 bool SocketStream::Resize( uint size )
 {
+	if ( m_BufferLen == m_MaxBufferLen) {
+		return false;
+	}
 	size = max(size, (int)(m_BufferLen>>1));
 	uint newBufferLen = m_BufferLen + size;
+	if (newBufferLen >= m_MaxBufferLen) {
+		newBufferLen = m_MaxBufferLen;
+	}
 	uint len = Length();
 	
 	char * newBuffer = new CHAR[ newBufferLen ];
 	if (nullptr == newBuffer)
 	{
-		//OPS TODO memeory overflow
 		return false;
 	} 
-	
-//	Assert( newBuffer ) ;
 		
 	if ( m_Head < m_Tail ) 
 	{
@@ -243,9 +246,9 @@ uint SocketStream::Write(const char* buf, uint len)
 	}
 	
 	uint nFree = ((m_Head <= m_Tail) ? (m_BufferLen - m_Tail + m_Head - 1) : (m_Head - m_Tail - 1));
-	if (len >= nFree)
+	if (len > nFree)
 	{
-		if (!Resize(len - nFree + 1))
+		if (!Resize(len - nFree))
 			return 0;
 	}
 

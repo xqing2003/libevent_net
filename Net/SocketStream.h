@@ -68,7 +68,6 @@ public :
 	uint						Capacity( )const { return m_BufferLen; }
 	
 	uint						Length( )const ;
-	uint						Size( )const { return Length(); }
 
 	bool						IsEmpty( )const { return m_Head==m_Tail; }
 
@@ -80,6 +79,7 @@ public :
 	char*						GetBuff(){ return m_Buffer; }
 	char*						GetBuff()const { return m_Buffer; }
 	char*						GetTail()const { return &(m_Buffer[m_Tail]); }
+	uint						GetFreeLength() const { return m_BufferLen - Length() - 1; }
 private :
 	CSocket*	m_pSocket;	
 	char*		m_Buffer;
