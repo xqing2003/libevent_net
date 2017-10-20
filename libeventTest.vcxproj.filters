@@ -48,6 +48,12 @@
     <ClInclude Include="Net\Packet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Net\TCPServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\ConnectionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +78,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Net\NetConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TCPServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\ConnectionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
