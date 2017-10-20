@@ -9,6 +9,7 @@
 #include "Net/NetManager.h"
 #include "Net/CSocket.h"
 #include "Net/Address.h"
+#include "Net/TCPServer.h"
 #pragma comment(lib, "ws2_32")
 using namespace std;
 #if 0
@@ -108,6 +109,13 @@ void listenCallback(evutil_socket_t sock, short events, void *data) {
 
 #endif
 
+void onConnectable(evutil_socket_t sock, short events, void *data) {
+
+}
+void onReadWritable(evutil_socket_t sock, short events, void *data) {
+
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	struct event *ev;
@@ -115,8 +123,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	WSADATA wsa_data;
 	WSAStartup(0x0201, &wsa_data);
 #endif
-	Address addr(111, false);
-	NetManager manager;
+	TCPServer tcpServer(onConnectable, onReadWritable, onReadWritable);
+	tcpServer.setConnectionMgr(new ConnectionManager());
+	tcpServer.listen(8765);
+	while (true)
+	{
+		tcpServer.tick(1);
+	}
+
 	return 0;
 }
 

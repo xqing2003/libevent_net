@@ -2,13 +2,15 @@
 
 #include "TCPServer.h"
 
-TCPServer::TCPServer(NetEventCallBack *pOnConnect, NetEventCallBack *pOnRead, NetEventCallBack *pOnWrite) :
-					m_pOnConnectable(pOnConnect), m_pOnReadable(pOnRead), m_pOnWritable(pOnWrite) {
+TCPServer::TCPServer(NetEventCallBack onConnect, NetEventCallBack onRead, NetEventCallBack onWrite) :
+					m_fnOnConnectable(onConnect), m_fnOnReadable(onRead), m_fnOnWritable(onWrite) {
+	m_pConnectMgr = nullptr;
 	m_oNetMgr.init();
 }
 
 TCPServer::~TCPServer() {
 	m_oNetMgr.exit();
+	SAFE_DELETE(m_pConnectMgr);
 }
 
 bool TCPServer::listen(uint16 port) {
@@ -22,7 +24,14 @@ bool TCPServer::listen(uint16 port) {
 		return false;
 	}
 
-	m_oNetMgr.addListenSocket(m_oListenSocket.GetSocket(), *m_pOnConnectable, this);
+	ret = m_oListenSocket.Listen(port);
+	if (!ret) {
+		return false;
+	}
+
+	m_oListenSocket.SetNonBlocking(true);
+
+	m_oNetMgr.addListenSocket(m_oListenSocket.GetSocket(), m_fnOnConnectable, this);
 	return true;
 }
 
