@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "NetDefine.h"
+#include <string>
 
 class CSocket {
 public:

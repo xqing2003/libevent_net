@@ -42,6 +42,12 @@
     <ClInclude Include="Net\Address.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Net\SocketStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Packet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Net\Address.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\SocketStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
